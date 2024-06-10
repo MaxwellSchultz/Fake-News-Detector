@@ -65,108 +65,46 @@
 \begin{document}
 \maketitle
 \begin{abstract}
-This document is a supplement to the general instructions for *ACL authors. It contains instructions for using the \LaTeX{} style file for ACL 2023.
-The document itself conforms to its own specifications, and is, therefore, an example of what your manuscript should look like.
-These instructions should be used both for papers submitted for review and for final versions of accepted papers.
+This project aims to classify news article titles as sarcastic or non-sarcastic based on their content and context. Initially focused on sarcasm detection, the project pivoted to fake news detection due to dataset limitations. We used datasets from Kaggle and implemented multiple models, including Neural Bag of Words, Recurrent Neural Networks (RNNs), and Transformers. Our findings reveal that while Transformer models exhibit high accuracy, they struggle with nuanced contexts such as satire, and result in longer training times over other models. This report details our methodology, experimental results, and future directions for improving sarcasm detection.
 \end{abstract}
 
 \section{Introduction}
 
-These instructions are for authors submitting papers to ACL 2023 using \LaTeX. They are not self-contained. All authors must follow the general instructions for *ACL proceedings,\footnote{\url{http://acl-org.github.io/ACLPUB/formatting.html}} as well as guidelines set forth in the ACL 2023 call for papers.\footnote{\url{https://2023.aclweb.org/calls/main_conference/}} This document contains additional instructions for the \LaTeX{} style files.
-The templates include the \LaTeX{} source of this document (\texttt{acl2023.tex}),
-the \LaTeX{} style file used to format it (\texttt{acl2023.sty}),
-an ACL bibliography style (\texttt{acl\_natbib.bst}),
-an example bibliography (\texttt{custom.bib}),
-and the bibliography for the ACL Anthology (\texttt{anthology.bib}).
+Neural Networks have become pivotal in various NLP tasks due to their ability to learn complex patterns from large datasets. This project aimed to leverage neural networks and traditional machine learning models to detect sarcasm in news headlines. Sarcasm detection holds significant ethical benefits, as it can improve the understanding and moderation of online communication, reducing misunderstandings and promoting healthier online interactions. However, limitations in the dataset necessitated a pivot to fake news detection. Fake news detection carries ethical benefits as well, as it helps combat misinformation, which can influence public opinion and decision-making processes. By ensuring the authenticity of news articles, such systems contribute to a more informed and rational public discourse. This paper discusses our approach, experimental setup, results, and the implications of our findings.
 
 \section{Related Work}
 
-To produce a PDF file, pdf\LaTeX{} is strongly recommended (over original \LaTeX{} plus dvips+ps2pdf or dvipdf). Xe\LaTeX{} also produces PDF files, and is especially suitable for text in non-Latin scripts.
-\begin{table}
-\centering
-\begin{tabular}{lc}
-\hline
-\textbf{Command} & \textbf{Output}\\
-\hline
-\verb|{\"a}| & {\"a} \\
-\verb|{\^e}| & {\^e} \\
-\verb|{\`i}| & {\`i} \\ 
-\verb|{\.I}| & {\.I} \\ 
-\verb|{\o}| & {\o} \\
-\verb|{\'u}| & {\'u}  \\ 
-\verb|{\aa}| & {\aa}  \\\hline
-\end{tabular}
-\begin{tabular}{lc}
-\hline
-\textbf{Command} & \textbf{Output}\\
-\hline
-\verb|{\c c}| & {\c c} \\ 
-\verb|{\u g}| & {\u g} \\ 
-\verb|{\l}| & {\l} \\ 
-\verb|{\~n}| & {\~n} \\ 
-\verb|{\H o}| & {\H o} \\ 
-\verb|{\v r}| & {\v r} \\ 
-\verb|{\ss}| & {\ss} \\
-\hline
-\end{tabular}
-\caption{Example commands for accented characters, to be used in, \emph{e.g.}, Bib\TeX{} entries.}
-\label{tab:accents}
-\end{table}
+
+Fake News Detection
+The proliferation of fake news has become a major concern, impacting political, economic, and social landscapes. \cite{Agarwal2019} conducted a comprehensive study on fake news detection using a combination of NLP techniques and machine learning classifiers. They employed methods such as bag-of-words, n-grams, count vectorizer, and TF-IDF, training their dataset on five different classifiers. Their findings indicated that precision, recall, and F1 scores are critical metrics in determining the most effective model for fake news detection .
+
+Sarcasm Detection
+Sarcasm detection poses unique challenges due to its inherently ambiguous nature. \cite{Jain2017} explored sarcasm detection in tweets by utilizing ensemble-based approaches, specifically a voted ensemble classifier and a random forest classifier. Their research highlighted the difficulty in detecting sarcasm due to the evolving nature of language and the use of emoticons, which can alter the polarity of text. Their methodology diverged from traditional sentiment analysis by focusing on the presence of positive sentiment attached to negative situations, thus improving the detection accuracy in social media contexts .
+
+Similarly, \cite{Baroiu2022} provided a systematic literature review on automatic sarcasm detection, tracing its evolution from 2010 to the present. They emphasized the growing popularity of multi-modal approaches and transformer-based architectures in recent years. Their work not only critiqued past research but also proposed future directions, underscoring the necessity for advanced models capable of handling the complexities of sarcasm in natural language .
+
+
+
 \section{Approach}
-\begin{table*}
-\centering
-\begin{tabular}{lll}
-\hline
-\textbf{Output} & \textbf{natbib command} & \textbf{Old ACL-style command}\\
-\hline
-\citep{ct1965} & \verb|\citep| & \verb|\cite| \\
-\citealp{ct1965} & \verb|\citealp| & no equivalent \\
-\citet{ct1965} & \verb|\citet| & \verb|\newcite| \\
-\citeyearpar{ct1965} & \verb|\citeyearpar| & \verb|\shortcite| \\
-\citeposs{ct1965} & \verb|\citeposs| & no equivalent \\
-\citep[FFT;][]{ct1965} &  \verb|\citep[FFT;][]| & no equivalent\\
-\hline
-\end{tabular}
-\caption{\label{citation-guide}
-Citation commands supported by the style file.
-The style is based on the natbib package and supports all natbib citation commands.
-It also supports commands defined in previous ACL style files for compatibility.
-}
-\end{table*}
-The first line of the file must be
-\begin{quote}
-\begin{verbatim}
-\documentclass[11pt]{article}
-\end{verbatim}
-\end{quote}
-To load the style file in the review version:
-\begin{quote}
-\begin{verbatim}
-\usepackage[review]{ACL2023}
-\end{verbatim}
-\end{quote}
-For the final version, omit the \verb|review| option:
-\begin{quote}
-\begin{verbatim}
-\usepackage{ACL2023}
-\end{verbatim}
-\end{quote}
-To use Times Roman, put the following in the preamble:
-\begin{quote}
-\begin{verbatim}
-\usepackage{times}
-\end{verbatim}
-\end{quote}
-(Alternatives like txfonts or newtx are also acceptable.)
-Please see the \LaTeX{} source of this document for comments on other packages that may be useful.
-Set the title and author using \verb|\title| and \verb|\author|. Within the author list, format multiple authors using \verb|\and| and \verb|\And| and \verb|\AND|; please see the \LaTeX{} source for examples.
-By default, the box containing the title and author names is set to the minimum of 5 cm. If you need more space, include the following in the preamble:
-\begin{quote}
-\begin{verbatim}
-\setlength\titlebox{<dim>}
-\end{verbatim}
-\end{quote}
-where \verb|<dim>| is replaced with a length. Do not set this length smaller than 5 cm.
+
+
+Our approach utilizes the PyTorch library to implement and train various sequence classification models for sentiment analysis, specifically targeting movie reviews. The implementation details and models are based on the tutorials provided by \cite{Trevett2023}, which offer a comprehensive guide on using PyTorch for sentiment analysis tasks. Below, we outline the main steps and models used in our approach.
+\newline
+Models and Tutorials
+\\
+
+Neural Bag of Words:
+
+This tutorial introduces the basic workflow of a sequence classification project using a neural bag-of-words model. It covers data loading and preprocessing using the datasets and torchtext libraries. The model is simple yet effective for understanding the foundational concepts of sequence classification.
+
+Recurrent Neural Networks (RNN):
+
+Building on the basic workflow, this tutorial focuses on improving the model's performance by switching to a recurrent neural network (RNN) model. Specifically, it implements a long short-term memory (LSTM) RNN, which is one of the most commonly used variants of RNNs due to its ability to handle long-range dependencies in sequential data.
+
+Transformers:
+
+The final tutorial demonstrates how to use the transformers library to load a pre-trained transformer model, specifically BERT (Bidirectional Encoder Representations from Transformers). BERT, introduced in the paper by Devlin et al., provides high performance for various NLP tasks, including sequence classification. The tutorial covers loading the pre-trained BERT model and fine-tuning it for sentiment analysis.
+
 
 \section{Document Body}
 
@@ -187,19 +125,9 @@ Users of older versions of \LaTeX{} may encounter the following error during com
 \end{quote}
 This happens when pdf\LaTeX{} is used and a citation splits across a page boundary. The best way to fix this is to upgrade \LaTeX{} to 2018-12-01 or later.
 
-\subsection{Citations}
-
-
-
-Table~\ref{citation-guide} shows the syntax supported by the style files.
-We encourage you to use the natbib styles.
-You can use the command \verb|\citet| (cite in text) to get ``author (year)'' citations, like this citation to a paper by \citet{Gusfield:97}.
-You can use the command \verb|\citep| (cite in parentheses) to get ``(author, year)'' citations \citep{Gusfield:97}.
-You can use the command \verb|\citealp| (alternative cite without parentheses) to get ``author, year'' citations, which is useful for using citations within parentheses (e.g. \citealp{Gusfield:97}).
-
 \subsection{References}
 
-\nocite{Ando2005,augenstein-etal-2016-stance,andrew2007scalable,rasooli-tetrault-2015,goodman-etal-2016-noise,harper-2014-learning}
+
 
 The \LaTeX{} and Bib\TeX{} style files provided roughly follow the American Psychological Association format.
 If your own bib file is named \texttt{custom.bib}, then placing the following before any appendices in your \LaTeX{} file will generate the references section for you:
